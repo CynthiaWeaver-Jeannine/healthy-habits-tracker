@@ -1,4 +1,5 @@
 import { sampleHabitItems } from "@/features/habits/data/sampleHabitItems";
+import HabitItem from "@/features/habits/components/HabitItem";
 
 export default function Home() {
   return (
@@ -18,12 +19,10 @@ export default function Home() {
           <h2 className="text-xl font-semibold">Today&apos;s Habits</h2>
           <ul className="mt-4 space-y-3">
             {sampleHabitItems.map((habit) => (
-              <li key={habit.id} className="rounded-lg border p-4">
-                <label className="flex items-center gap-3">
-                  <input type="checkbox" />
-                  <span>{habit.label}</span>
-                </label>
-              </li>
+              <HabitItem
+                key={habit.id}
+                habit={habit}
+                />
             ))}
           </ul>
         </section>
