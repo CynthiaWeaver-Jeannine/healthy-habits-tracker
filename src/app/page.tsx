@@ -3,11 +3,12 @@
 import { useState } from "react";
 import { sampleHabitItems } from "@/features/habits/data/sampleHabitItems";
 import HabitItem from "@/features/habits/components/HabitItem";
+import { habitCategories } from "@/features/habits/constants/habitCategories";
 
 export default function Home() {
   const [checkedHabitIds, setCheckedHabitIds] = useState<string[]>([]);
 
-  function handleCheckedHabitChange(habitId: string, checked: boolean) {
+  function handleHabitCheckedChange(habitId: string, checked: boolean) {
     if (checked) {
       setCheckedHabitIds((currentCheckedIds) => [
         ...currentCheckedIds,
@@ -19,6 +20,7 @@ export default function Home() {
       );
     }
   }
+
   return (    
       <main className="min-h-screen p-8">        
         <h1 className="text-3xl font-bold">Healthy Habit Tracker</h1>
@@ -32,16 +34,34 @@ export default function Home() {
         <p className="mt-2 text-gray-600">
           {checkedHabitIds.length} of {sampleHabitItems.length} checked today
         </p>
-        <ul className="mt-4 space-y-3">
-          {sampleHabitItems.map((habit) => (
-            <HabitItem
-              key={habit.id}
-              habit={habit}
-              isChecked={checkedHabitIds.includes(habit.id)}
-              onCheckedChange={handleCheckedHabitChange}
-              />
-          ))}
-        </ul>
+
+        <div className="mt-6 space-y-8">
+          {habitCategories.map((category) => {
+            const habitsInCategory = sampleHabitItems.filter(
+              (habit) => habit.category === category.id
+            );
+            if (habitsInCategory.length === 0 ) {
+              return null;
+            }
+
+            return (
+              <section key={category.id}>
+                <h3 className="text-lg font-semibold">{category.title}</h3>
+
+                <ul className="mt-3 space-y-3">
+                  {habitsInCategory.map((habit) => (
+                    <HabitItem
+                    key={habit.id}
+                    habit={habit}
+                    isChecked={checkedHabitIds.includes(habit.id)}
+                    onCheckedChange={handleHabitCheckedChange}
+                    />
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
       </section>
 
       </main>
