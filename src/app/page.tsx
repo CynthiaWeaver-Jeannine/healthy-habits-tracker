@@ -1,4 +1,4 @@
-
+import { sampleHabitItems } from "@/features/habits/data/sampleHabitItems";
 
 export default function Home() {
   return (
@@ -13,7 +13,21 @@ export default function Home() {
           <p className="mt-4 text-gray-600">
             Track daily healthy habit checkboxes by category.
           </p>
-         </div>
+        </div>
+        <section className="mt-8">
+          <h2 className="text-xl font-semibold">Today&apos;s Habits</h2>
+          <ul className="mt-4 space-y-3">
+            {sampleHabitItems.map((habit) => (
+              <li key={habit.id} className="rounded-lg border p-4">
+                <label className="flex items-center gap-3">
+                  <input type="checkbox" />
+                  <span>{habit.label}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </section>
+
       </main>
     </div>
   );
